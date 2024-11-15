@@ -20,7 +20,23 @@ export class SupplierController {
         return{product:{}, params}
     }
 
-   
+    @Put(':id')
+    async update(@Body() body, @Param() params){
+        return {
+            method: 'put',
+            body,
+            params
+        }
+    }
+
+    @Patch(':id')
+    async updatePartial(@Body() body, @Param() params){
+        return {
+            method : 'patch',
+            body,
+            params
+        }
+    }
 
 
 }
