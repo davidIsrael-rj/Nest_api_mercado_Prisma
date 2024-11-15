@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
 
 @Controller('sector')
 export class SectorController {
@@ -15,5 +15,23 @@ export class SectorController {
     @Get(':id')
     async show(@Param() params) {
         return { sector: {}, params }
+    }
+
+    @Put(':id')
+    async update(@Body() body, @Param() params){
+        return {
+            method: 'put',
+            body,
+            params
+        }
+    }
+
+    @Patch(":id")
+    async updatePartial(@Body() body, @Param() params){
+        return {
+            method:'Patch',
+            body,
+            params
+        }
     }
 }
