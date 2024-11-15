@@ -39,7 +39,7 @@ export class ProductController {
     @Patch(':id')
     async updatePartial(@Body() body, @Param() params){
         return{
-            method: 'parch',
+            method: 'patch',
             body,
             params
         }

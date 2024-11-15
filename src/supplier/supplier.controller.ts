@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Put } from "@nestjs/common";
 
 @Controller('supplier')
 export class SupplierController {
@@ -6,6 +6,18 @@ export class SupplierController {
     @Post()
     async create (@Body() body){
         return {body}
+    }
+
+    @Get()
+    async list(){
+        return{
+            supplier:[{"id":"1", "name":"Papelaria China"}]
+        }
+    }
+
+    @Get(':id')
+    async show(@Param() params){
+        return{product:{}, params}
     }
 
    
