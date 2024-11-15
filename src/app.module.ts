@@ -5,13 +5,15 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { CustomerModule } from './customer/customer.module';
 import { SectorModule } from './sector/sector.module';
+import { SupplierModule } from './supplier/supplier.module';
 
 @Module({
   imports: [
     UserModule, 
     ProductModule, 
     CustomerModule,
-    SectorModule
+    SectorModule,
+    SupplierModule
   ],
   controllers: [AppController],
   providers: [AppService],
