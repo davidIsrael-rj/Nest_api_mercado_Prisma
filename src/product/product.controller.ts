@@ -19,16 +19,7 @@ export class ProductController {
                     "precoVenda": "2.50",
                     "setor": "papelaria",
                     "fornecedor": "Papelaria China"
-                },
-                {
-                    "id": "2",
-                    "name": "Caderno",
-                    "precoCusto": "2.50",
-                    "precoVenda": "3.50",
-                    "setor": "papelaria",
-                    "fornecedor": "Papelaria China"
-                },
-            ]
+                }]
         }
     }
 
