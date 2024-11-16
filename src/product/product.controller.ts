@@ -1,11 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } from "@nestjs/common";
+import { CreateProductDTO } from "./dto/create-product.dto";
+import { UpdatePutProductDTO } from "./dto/update-put-product.dto";
+import { UpdatePatchProductDTO } from "./dto/update-patch-product.dto";
 
 @Controller('product')
 export class ProductController {
 
     @Post()
-    async create(@Body() body) {
-        return { body }
+    async create(@Body() {name, precoVenda, precoCusto,fornecedor,setor}:CreateProductDTO) {
+        const precoV = Number(precoVenda) 
+        const precoC = Number(precoCusto) 
+        return { name, precoV, precoC, fornecedor, setor }
     }
 
     @Get()
@@ -24,31 +29,31 @@ export class ProductController {
     }
 
     @Get(':id')
-    async show(@Param() param) {
-        return { product: {}, param }
+    async show(@Param('id', ParseIntPipe)  id) {
+        return { product: {}, id }
     }
     @Put(':id')
-    async update(@Body() body, @Param() params) {
+    async update(@Body() body: UpdatePutProductDTO,@Param('id', ParseIntPipe)  id) {
         return {
             method: 'put',
             body,
-            params
+            id
         }
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body, @Param() params){
+    async updatePartial(@Body() body:UpdatePatchProductDTO, @Param('id', ParseIntPipe)  id){
         return{
             method: 'patch',
             body,
-            params
+            id
         }
     }
 
     @Delete(':id')
-    async delete(@Param() params){
+    async delete(@Param('id', ParseIntPipe)  id){
         return {
-            params
+            id
         }
     }
 
