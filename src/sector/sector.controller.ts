@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } from "@nestjs/common";
+import { CreateSectorDTO } from "./dto/create-sector.dto";
+import { UpdatePutSectorDTO } from "./dto/update-put-sector.dto";
+import { UpdatePatchSectorDTO } from "./dto/update-patch-sector.dto";
 
 @Controller('sector')
 export class SectorController {
     @Post()
-    async create(@Body() body) {
+    async create(@Body() body:CreateSectorDTO) {
         return { body }
     }
 
@@ -13,30 +16,30 @@ export class SectorController {
     }
 
     @Get(':id')
-    async show(@Param() params) {
-        return { sector: {}, params }
+    async show(@Param('id', ParseIntPipe) id:Number) {
+        return { sector: {}, id }
     }
 
     @Put(':id')
-    async update(@Body() body, @Param() params){
+    async update(@Body() body:UpdatePutSectorDTO, @Param('id', ParseIntPipe) id:Number){
         return {
             method: 'put',
             body,
-            params
+            id
         }
     }
 
     @Patch(":id")
-    async updatePartial(@Body() body, @Param() params){
+    async updatePartial(@Body() body: UpdatePatchSectorDTO, @Param('id', ParseIntPipe) id:Number ){
         return {
             method:'Patch',
             body,
-            params
+            id
         }
     }
 
     @Delete(':id')
-    async delete(@Param() params){
-        return {params}
+    async delete(@Param('id', ParseIntPipe) id:Number){
+        return {id}
     }
 }
