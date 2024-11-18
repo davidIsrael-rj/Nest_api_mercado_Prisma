@@ -17,3 +17,14 @@ model User {
 
   @@map("users")
 }
+
+model Product {
+  id         Int     @id @default(autoincrement()) @db.UnsignedInt
+  name       String  @db.VarChar(63)
+  precoCusto Decimal @db.Decimal(10, 2)
+  precoVenda Decimal @db.Decimal(10, 2)
+  setor      String  @db.VarChar(63)
+  fornecedor String  @db.VarChar(63)
+
+  @@map("products")
+}

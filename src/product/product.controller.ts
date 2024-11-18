@@ -2,15 +2,18 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } 
 import { CreateProductDTO } from "./dto/create-product.dto";
 import { UpdatePutProductDTO } from "./dto/update-put-product.dto";
 import { UpdatePatchProductDTO } from "./dto/update-patch-product.dto";
+import {ProductService} from "./product.service";
 
 @Controller('product')
 export class ProductController {
 
+    constructor(private readonly productService: ProductService){}
+
     @Post()
     async create(@Body() {name, precoVenda, precoCusto,fornecedor,setor}:CreateProductDTO) {
-        const precoV = Number(precoVenda) 
-        const precoC = Number(precoCusto) 
-        return { name, precoV, precoC, fornecedor, setor }
+        // const precoV = Number(precoVenda);
+        // const precoC = Number(precoCusto); 
+        return this.productService.create(name, precoCusto, precoVenda, fornecedor, setor)
     }
 
     @Get()

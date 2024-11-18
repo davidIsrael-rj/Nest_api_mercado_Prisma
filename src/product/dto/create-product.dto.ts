@@ -1,16 +1,16 @@
 import { Transform } from "class-transformer";
-import { IsNumberString, IsString } from "class-validator";
+import { IsDecimal, IsNumberString, IsString } from "class-validator";
 
 export class CreateProductDTO {
    
     @IsString()
     name: string;
 
-    @IsNumberString()
-    precoCusto:number;
+    @IsDecimal({decimal_digits: '2', force_decimal:true})
+    precoCusto:string;
 
-    @IsNumberString()
-    precoVenda: number;
+    @IsDecimal({decimal_digits: '2', force_decimal:true})
+    precoVenda: string;
 
     @IsString()
     fornecedor:string;
