@@ -1,5 +1,4 @@
-import { Transform } from "class-transformer";
-import { IsDecimal, IsNumberString, IsString } from "class-validator";
+import { IsDecimal, IsString } from "class-validator";
 
 export class CreateProductDTO {
    
