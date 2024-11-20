@@ -25,12 +25,8 @@ export class ProductController {
         return this.productService.show(id);
     }
     @Put(':id')
-    async update(@Body() body: UpdatePutProductDTO,@Param('id', ParseIntPipe)  id) {
-        return {
-            method: 'put',
-            body,
-            id
-        }
+    async update(@Body() data: UpdatePutProductDTO,@Param('id', ParseIntPipe)  id) {
+        return this.productService.update(id, data);
     }
 
     @Patch(':id')
