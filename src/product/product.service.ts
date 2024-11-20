@@ -3,6 +3,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import { CreateProductDTO } from "./dto/create-product.dto";
 import Decimal from "decimal.js";
 import { UpdatePutProductDTO } from "./dto/update-put-product.dto";
+import { UpdatePatchProductDTO } from "./dto/update-patch-product.dto";
 
 @Injectable()
 export class ProductService {
@@ -35,6 +36,13 @@ export class ProductService {
         return this.prisma.product.update({
             data,
             where:{id}
-        })
+        });
+    }
+
+    async updatePartial(id: number, data:UpdatePatchProductDTO){
+        return this.prisma.product.update({
+            data,
+            where:{id}
+        });
     }
 }

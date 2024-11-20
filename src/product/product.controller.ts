@@ -30,12 +30,8 @@ export class ProductController {
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body:UpdatePatchProductDTO, @Param('id', ParseIntPipe)  id){
-        return{
-            method: 'patch',
-            body,
-            id
-        }
+    async updatePartial(@Body() data:UpdatePatchProductDTO, @Param('id', ParseIntPipe)  id){
+        return this.productService.updatePartial(id, data);
     }
 
     @Delete(':id')
