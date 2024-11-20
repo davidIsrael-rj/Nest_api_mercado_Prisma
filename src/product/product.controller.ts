@@ -11,24 +11,13 @@ export class ProductController {
 
     @Post()
     async create(@Body() {name, precoVenda, precoCusto,fornecedor,setor}:CreateProductDTO) {
-        // const precoV = Number(precoVenda);
-        // const precoC = Number(precoCusto); 
+       
         return this.productService.create(name, precoCusto, precoVenda, fornecedor, setor)
     }
 
     @Get()
     async list() {
-        return {
-            product: [
-                {
-                    "id": "1",
-                    "name": "Caderneta",
-                    "precoCusto": "1.50",
-                    "precoVenda": "2.50",
-                    "setor": "papelaria",
-                    "fornecedor": "Papelaria China"
-                }]
-        }
+        return this.productService.list();
     }
 
     @Get(':id')
