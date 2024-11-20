@@ -21,8 +21,8 @@ export class ProductController {
     }
 
     @Get(':id')
-    async show(@Param('id', ParseIntPipe)  id) {
-        return { product: {}, id }
+    async show(@Param('id', ParseIntPipe)  id: number) {
+        return this.productService.show(id);
     }
     @Put(':id')
     async update(@Body() body: UpdatePutProductDTO,@Param('id', ParseIntPipe)  id) {
