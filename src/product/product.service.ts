@@ -7,42 +7,48 @@ import { UpdatePatchProductDTO } from "./dto/update-patch-product.dto";
 
 @Injectable()
 export class ProductService {
-    constructor(private readonly prisma: PrismaService){}
+    constructor(private readonly prisma: PrismaService) { }
 
-    async create (name, precoCusto, precoVenda, fornecedor, setor){
+    async create(name, precoCusto, precoVenda, fornecedor, setor) {
 
         return await this.prisma.product.create({
-            data:{
+            data: {
                 name,
-                precoCusto : new Decimal(precoCusto),
-                precoVenda : new Decimal(precoVenda),
+                precoCusto: new Decimal(precoCusto),
+                precoVenda: new Decimal(precoVenda),
                 fornecedor,
                 setor
             },
         })
     }
 
-    async list(){
+    async list() {
         return this.prisma.product.findMany();
     }
 
-    async show(id: number){
+    async show(id: number) {
         return this.prisma.product.findUnique({
-            where:{id}
+            where: { id }
         });
     }
 
-    async update(id: number, data:UpdatePutProductDTO){
+    async update(id: number, data: UpdatePutProductDTO) {
         return this.prisma.product.update({
             data,
-            where:{id}
+            where: { id }
         });
     }
 
-    async updatePartial(id: number, data:UpdatePatchProductDTO){
+    async updatePartial(id: number, data: UpdatePatchProductDTO) {
         return this.prisma.product.update({
             data,
-            where:{id}
+            where: { id }
+        });
+    }
+
+    async delete(id: number) {
+        return this.prisma.product.delete({
+            where: { id }
         });
     }
 }
