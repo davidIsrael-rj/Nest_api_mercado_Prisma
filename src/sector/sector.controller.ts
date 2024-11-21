@@ -40,6 +40,6 @@ export class SectorController {
 
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id:number){
-        return {id}
+        return this.sectorService.delete(id);
     }
 }
