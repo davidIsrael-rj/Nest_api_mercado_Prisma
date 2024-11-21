@@ -16,7 +16,7 @@ export class SectorController {
 
     @Get()
     async list() {
-        return { sector: [{ "id": "1", "name": "papelaria" }] }
+        return this.sectorService.list();
     }
 
     @Get(':id')

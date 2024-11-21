@@ -12,4 +12,8 @@ export class SectorService {
             data,
         });
     }
+
+    async list(){
+        return this.prisma.sector.findMany()
+    }
 }
