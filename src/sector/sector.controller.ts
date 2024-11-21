@@ -25,12 +25,8 @@ export class SectorController {
     }
 
     @Put(':id')
-    async update(@Body() body:UpdatePutSectorDTO, @Param('id', ParseIntPipe) id:number){
-        return {
-            method: 'put',
-            body,
-            id
-        }
+    async update(@Body() data:UpdatePutSectorDTO, @Param('id', ParseIntPipe) id:number){
+        return this.sectorService.update(id, data);
     }
 
     @Patch(":id")
