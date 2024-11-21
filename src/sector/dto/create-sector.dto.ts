@@ -7,5 +7,5 @@ export class CreateSectorDTO {
     name: string
 
     @IsDateString()
-    date: Date
+    createdAt: string
 }
