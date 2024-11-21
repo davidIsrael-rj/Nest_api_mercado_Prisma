@@ -6,6 +6,4 @@ export class CreateSectorDTO {
     @MinLength(4, { message: 'O setor tem que ter um minímo de 4 caracteres' })
     name: string
 
-    @IsDateString()
-    createdAt: string
 }

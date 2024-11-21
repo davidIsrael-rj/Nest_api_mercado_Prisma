@@ -2,12 +2,16 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } 
 import { CreateSectorDTO } from "./dto/create-sector.dto";
 import { UpdatePutSectorDTO } from "./dto/update-put-sector.dto";
 import { UpdatePatchSectorDTO } from "./dto/update-patch-sector.dto";
+import { SectorService } from "./sector.service";
+
 
 @Controller('sector')
 export class SectorController {
+
+    constructor(private readonly sectorService: SectorService){}
     @Post()
-    async create(@Body() body:CreateSectorDTO) {
-        return { body }
+    async create(@Body() data:CreateSectorDTO) {
+        return this.sectorService.create(data);
     }
 
     @Get()
