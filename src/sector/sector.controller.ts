@@ -20,12 +20,12 @@ export class SectorController {
     }
 
     @Get(':id')
-    async show(@Param('id', ParseIntPipe) id:Number) {
-        return { sector: {}, id }
+    async show(@Param('id', ParseIntPipe) id:number) {
+        return this.sectorService.show(id);
     }
 
     @Put(':id')
-    async update(@Body() body:UpdatePutSectorDTO, @Param('id', ParseIntPipe) id:Number){
+    async update(@Body() body:UpdatePutSectorDTO, @Param('id', ParseIntPipe) id:number){
         return {
             method: 'put',
             body,
@@ -34,7 +34,7 @@ export class SectorController {
     }
 
     @Patch(":id")
-    async updatePartial(@Body() body: UpdatePatchSectorDTO, @Param('id', ParseIntPipe) id:Number ){
+    async updatePartial(@Body() body: UpdatePatchSectorDTO, @Param('id', ParseIntPipe) id:number ){
         return {
             method:'Patch',
             body,
@@ -43,7 +43,7 @@ export class SectorController {
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id:Number){
+    async delete(@Param('id', ParseIntPipe) id:number){
         return {id}
     }
 }

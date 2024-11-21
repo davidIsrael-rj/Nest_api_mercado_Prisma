@@ -16,4 +16,10 @@ export class SectorService {
     async list(){
         return this.prisma.sector.findMany()
     }
+
+    async show(id: number){
+        return this.prisma.sector.findUnique({
+            where:{id}
+        });
+    }
 }
