@@ -1,0 +1,15 @@
+-- CreateTable
+CREATE TABLE `customers` (
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(63) NOT NULL,
+    `endereco` VARCHAR(127) NOT NULL,
+    `numero` VARCHAR(10) NOT NULL,
+    `bairro` VARCHAR(127) NOT NULL,
+    `estado` VARCHAR(127) NOT NULL,
+    `cpf` VARCHAR(11) NOT NULL,
+    `rg` VARCHAR(10) NOT NULL,
+    `cep` VARCHAR(8) NOT NULL,
+    `createAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

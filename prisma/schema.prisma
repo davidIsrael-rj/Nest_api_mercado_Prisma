@@ -37,3 +37,18 @@ model Sector {
 
   @@map("sectors")
 }
+
+model Customer {
+  id       Int      @id @default(autoincrement()) @db.UnsignedInt
+  name     String   @db.VarChar(63)
+  endereco String   @db.VarChar(127)
+  numero   String   @db.VarChar(10)
+  bairro   String   @db.VarChar(127)
+  estado   String   @db.VarChar(127)
+  cpf      String   @db.VarChar(11)
+  rg       String   @db.VarChar(10)
+  cep      String   @db.VarChar(8)
+  createAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("customers")
+}
