@@ -2,27 +2,29 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } 
 import { CreateCustomerDTO } from "./dto/create-customer.dto";
 import { UpdatePutCustomerDTO } from "./dto/update-put-customer.dto";
 import { UpdatePatchCustomerDTO } from "./dto/update-patch-customer.dto";
+import { CustomerService } from "./customer.service";
 
 @Controller('customer')
 export class CustomerController {
-    
+    constructor(private readonly customerService: CustomerService) { }
+
     @Post()
-    async create(@Body() body:CreateCustomerDTO){
-        return {body}
+    async create(@Body() data: CreateCustomerDTO) {
+        return this.customerService.create(data);
     }
 
     @Get()
-    async list(){
-        return {customer:[{"id":"1","name":"David Israel"}]}
+    async list() {
+        return { customer: [{ "id": "1", "name": "David Israel" }] }
     }
 
     @Get('id')
-    async show(@Param('id', ParseIntPipe) id:Number){
-        return {customer:{}, id}
+    async show(@Param('id', ParseIntPipe) id: Number) {
+        return { customer: {}, id }
     }
 
     @Put(':id')
-    async update(@Body() body:UpdatePutCustomerDTO, @Param('id', ParseIntPipe) id: Number){
+    async update(@Body() body: UpdatePutCustomerDTO, @Param('id', ParseIntPipe) id: Number) {
         return {
             method: 'put',
             body,
@@ -31,7 +33,7 @@ export class CustomerController {
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body:UpdatePatchCustomerDTO, @Param('id', ParseIntPipe) id: Number){
+    async updatePartial(@Body() body: UpdatePatchCustomerDTO, @Param('id', ParseIntPipe) id: Number) {
         return {
             method: 'parch',
             body,
@@ -40,7 +42,7 @@ export class CustomerController {
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id:Number){
+    async delete(@Param('id', ParseIntPipe) id: Number) {
         return {
             id
         }
