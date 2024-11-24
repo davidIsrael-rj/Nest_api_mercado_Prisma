@@ -15,7 +15,7 @@ export class CustomerController {
 
     @Get()
     async list() {
-        return { customer: [{ "id": "1", "name": "David Israel" }] }
+        return this.customerService.list();
     }
 
     @Get('id')

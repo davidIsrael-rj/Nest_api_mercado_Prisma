@@ -11,4 +11,8 @@ export class CustomerService {
             data,
         });
     }
+
+    async list(){
+        return this.prisma.customer.findMany();
+    }
 }
