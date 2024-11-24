@@ -21,4 +21,11 @@ export class CustomerService {
             where:{id}
         });
     }
+
+    async update(id:number ,data:CreateCustomerDTO){
+        return this.prisma.customer.update({
+            data,
+            where:{id}
+        });
+    }
 }

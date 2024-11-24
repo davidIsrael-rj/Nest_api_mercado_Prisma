@@ -24,12 +24,8 @@ export class CustomerController {
     }
 
     @Put(':id')
-    async update(@Body() body: UpdatePutCustomerDTO, @Param('id', ParseIntPipe) id: number) {
-        return {
-            method: 'put',
-            body,
-            id
-        }
+    async update(@Body() data: UpdatePutCustomerDTO, @Param('id', ParseIntPipe) id: number) {
+        return this.customerService.update(id, data);
     }
 
     @Patch(':id')
