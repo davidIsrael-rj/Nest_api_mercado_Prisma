@@ -18,13 +18,13 @@ export class CustomerController {
         return this.customerService.list();
     }
 
-    @Get('id')
-    async show(@Param('id', ParseIntPipe) id: Number) {
-        return { customer: {}, id }
+    @Get(':id')
+    async show(@Param('id', ParseIntPipe) id: number) {
+        return this.customerService.show(id);
     }
 
     @Put(':id')
-    async update(@Body() body: UpdatePutCustomerDTO, @Param('id', ParseIntPipe) id: Number) {
+    async update(@Body() body: UpdatePutCustomerDTO, @Param('id', ParseIntPipe) id: number) {
         return {
             method: 'put',
             body,
@@ -33,7 +33,7 @@ export class CustomerController {
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body: UpdatePatchCustomerDTO, @Param('id', ParseIntPipe) id: Number) {
+    async updatePartial(@Body() body: UpdatePatchCustomerDTO, @Param('id', ParseIntPipe) id: number) {
         return {
             method: 'parch',
             body,
@@ -42,7 +42,7 @@ export class CustomerController {
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: Number) {
+    async delete(@Param('id', ParseIntPipe) id: number) {
         return {
             id
         }

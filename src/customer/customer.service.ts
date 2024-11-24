@@ -15,4 +15,10 @@ export class CustomerService {
     async list(){
         return this.prisma.customer.findMany();
     }
+
+    async show(id:number){
+        return this.prisma.customer.findUnique({
+            where:{id}
+        });
+    }
 }
