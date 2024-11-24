@@ -34,6 +34,12 @@ export class CustomerService {
         return this.prisma.customer.update({
             data,
             where:{id}
+        });
+    }
+
+    async delete(id: number){
+        return this.prisma.customer.delete({
+            where:{id}
         })
     }
 }
