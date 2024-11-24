@@ -6,6 +6,9 @@ export class CreateCustomerDTO {
     name: string;
 
     @IsString()
+    telefone: string;
+    
+    @IsString()
     endereco: string;
 
     @IsString()
@@ -13,6 +16,9 @@ export class CreateCustomerDTO {
 
     @IsString()
     bairro:string;
+    
+    @IsString()
+    cidade:string;
 
     @IsString()
     estado:string;
