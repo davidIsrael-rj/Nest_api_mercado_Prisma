@@ -29,12 +29,8 @@ export class CustomerController {
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body: UpdatePatchCustomerDTO, @Param('id', ParseIntPipe) id: number) {
-        return {
-            method: 'parch',
-            body,
-            id
-        }
+    async updatePartial(@Body() data: UpdatePatchCustomerDTO, @Param('id', ParseIntPipe) id: number) {
+        return this.customerService.updatePartial(id, data);
     }
 
     @Delete(':id')

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateCustomerDTO } from "./dto/create-customer.dto";
+import { UpdatePatchCustomerDTO } from "./dto/update-patch-customer.dto";
 
 @Injectable()
 export class CustomerService {
@@ -27,5 +28,12 @@ export class CustomerService {
             data,
             where:{id}
         });
+    }
+
+    async updatePartial(id:number, data:UpdatePatchCustomerDTO){
+        return this.prisma.customer.update({
+            data,
+            where:{id}
+        })
     }
 }
