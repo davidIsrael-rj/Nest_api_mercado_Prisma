@@ -18,12 +18,12 @@ constructor(private readonly supplierService: SupplierService){}
     }
 
     @Get(':id')
-    async show(@Param('id',ParseIntPipe) id:Number){
-        return{product:{}, id}
+    async show(@Param('id',ParseIntPipe) id:number){
+        return this.supplierService.show(id);
     }
 
     @Put(':id')
-    async update(@Body() body:UpdatePutSupplierDTO, @Param('id', ParseIntPipe) id:Number){
+    async update(@Body() body:UpdatePutSupplierDTO, @Param('id', ParseIntPipe) id:number){
         return {
             method: 'put',
             body,
@@ -32,7 +32,7 @@ constructor(private readonly supplierService: SupplierService){}
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body: UpdatePatchSupplierDTO, @Param('id', ParseIntPipe) id:Number){
+    async updatePartial(@Body() body: UpdatePatchSupplierDTO, @Param('id', ParseIntPipe) id:number){
         return {
             method : 'patch',
             body,
@@ -41,7 +41,7 @@ constructor(private readonly supplierService: SupplierService){}
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id:Number){
+    async delete(@Param('id', ParseIntPipe) id:number){
         return{
             id
         }
