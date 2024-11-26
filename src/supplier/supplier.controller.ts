@@ -28,12 +28,8 @@ constructor(private readonly supplierService: SupplierService){}
     }
 
     @Patch(':id')
-    async updatePartial(@Body() body: UpdatePatchSupplierDTO, @Param('id', ParseIntPipe) id:number){
-        return {
-            method : 'patch',
-            body,
-            id
-        }
+    async updatePartial(@Body() data: UpdatePatchSupplierDTO, @Param('id', ParseIntPipe) id:number){
+        return this.supplierService.updatePartial(id, data);
     }
 
     @Delete(':id')
