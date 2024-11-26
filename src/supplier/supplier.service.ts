@@ -12,4 +12,14 @@ export class SupplierService {
             data
         });
     }
+
+    async listar(){
+        return this.prisma.supplier.findMany();
+    }
+
+    async show(id:number){
+        return this.prisma.supplier.findUnique({
+            where:{id}
+        });
+    }
 }

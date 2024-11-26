@@ -14,9 +14,7 @@ constructor(private readonly supplierService: SupplierService){}
 
     @Get()
     async list(){
-        return{
-            supplier:[{"id":"1", "name":"Papelaria China"}]
-        }
+        return this.supplierService.listar();
     }
 
     @Get(':id')
