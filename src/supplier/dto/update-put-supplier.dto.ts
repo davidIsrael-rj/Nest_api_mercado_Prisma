@@ -1,3 +1,3 @@
-import { CreateSupplier } from "./create-supplier.dto";
+import { CreateSupplierDTO } from "./create-supplier.dto";
 
-export class UpdatePutSupplierDTO extends CreateSupplier{}
+export class UpdatePutSupplierDTO extends CreateSupplierDTO{}

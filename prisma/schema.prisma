@@ -54,3 +54,18 @@ model Customer {
 
   @@map("customers")
 }
+
+model Supplier {
+  id       Int      @id @default(autoincrement()) @db.UnsignedInt
+  name     String   @db.VarChar(63)
+  endereco String   @db.VarChar(127)
+  numero   String   @db.VarChar(10)
+  bairro   String   @db.VarChar(127)
+  cidade   String   @db.VarChar(127)
+  estado   String   @db.VarChar(127)
+  ie       String   @db.VarChar(10)
+  cep      String   @db.VarChar(8)
+  createAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("suppliers")
+}
