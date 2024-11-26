@@ -23,12 +23,8 @@ constructor(private readonly supplierService: SupplierService){}
     }
 
     @Put(':id')
-    async update(@Body() body:UpdatePutSupplierDTO, @Param('id', ParseIntPipe) id:number){
-        return {
-            method: 'put',
-            body,
-            id
-        }
+    async update(@Body() data:UpdatePutSupplierDTO, @Param('id', ParseIntPipe) id:number){
+        return this.supplierService.update(id, data);
     }
 
     @Patch(':id')
