@@ -38,4 +38,10 @@ export class SupplierService {
             where:{id}
         });
     }
+
+    async delete(id:number){
+        return this.prisma.supplier.delete({
+            where:{id}
+        })
+    }
 }

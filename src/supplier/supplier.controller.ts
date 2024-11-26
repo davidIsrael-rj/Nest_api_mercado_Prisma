@@ -34,9 +34,7 @@ constructor(private readonly supplierService: SupplierService){}
 
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id:number){
-        return{
-            id
-        }
+        return this.supplierService.delete(id);
     }
 
 
