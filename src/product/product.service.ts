@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateProductDTO } from "./dto/create-product.dto";
 import Decimal from "decimal.js";
@@ -33,6 +33,7 @@ export class ProductService {
     }
 
     async update(id: number, data: UpdatePutProductDTO) {
+        await this.verificar(id);
         return this.prisma.product.update({
             data,
             where: { id }
@@ -40,6 +41,7 @@ export class ProductService {
     }
 
     async updatePartial(id: number, data: UpdatePatchProductDTO) {
+        await this.verificar(id);
         return this.prisma.product.update({
             data,
             where: { id }
@@ -47,8 +49,15 @@ export class ProductService {
     }
 
     async delete(id: number) {
+        await this.verificar(id);
         return this.prisma.product.delete({
             where: { id }
         });
+    }
+
+    async verificar(id:number){
+        if(!(await this.show(id))){
+            throw new NotFoundException(`O ID: ${id} não existe.`)
+        }
     }
 }
