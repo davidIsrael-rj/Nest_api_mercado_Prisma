@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateSectorDTO } from "./dto/create-sector.dto";
 import { UpdatePutSectorDTO } from "./dto/update-put-sector.dto";
@@ -25,6 +25,7 @@ export class SectorService {
     }
 
     async update(id: number, data: UpdatePutSectorDTO) {
+        await this.verificar(id);
         return this.prisma.sector.update({
             data,
             where: { id }
@@ -32,8 +33,15 @@ export class SectorService {
     }
 
     async delete (id: number){
+        await this.verificar(id);
         return this.prisma.sector.delete({
             where:{id}
         });
+    }
+
+    async verificar(id:number){
+        if(!(await this.show(id))){
+            throw new NotFoundException(`O ID: ${id} não existe.`)
+        }
     }
 }
