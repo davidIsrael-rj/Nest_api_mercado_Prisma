@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
@@ -16,40 +16,53 @@ export class UserService {
                 email,
                 name,
                 password,
-                birthAt:new Date(birthAt)
+                birthAt: new Date(birthAt)
             },
 
         })
     }
 
-    async list(){
+    async list() {
         return this.prisma.user.findMany();
     }
 
-    async show(id:number){
+    async show(id: number) {
         return this.prisma.user.findUnique({
-            where:{id}
+            where: { id }
         });
     }
 
-    async update(id: number,{name,email,password,birthAt} :UpdatePutUserDTO){
+    async update(id: number, { name, email, password, birthAt }: UpdatePutUserDTO) {
+        await this.verificar(id);
         return this.prisma.user.update({
-          data:{name,email,password,birthAt :new Date(birthAt)},
-          where:{id}  
+            data: { name, email, password, birthAt: new Date(birthAt) },
+            where: { id }
         });
     }
-    
-    async updatePartial(id: number, {name,email,password,birthAt}: UpdatePatchUserDTO){
+
+    async updatePartial(id: number, { name, email, password, birthAt }: UpdatePatchUserDTO) {
+        await this.verificar(id);
         return this.prisma.user.update({
-            data:{name,email,password,birthAt :new Date(birthAt)},
-            where:{id}
+            data: {
+                name,
+                email,
+                password,
+                birthAt: birthAt === undefined ? undefined : new Date(birthAt)
+            },
+            where: { id }
         })
     }
 
-    async delete(id: number){
+    async delete(id: number) {
+        await this.verificar(id);
         return this.prisma.user.delete({
-            where:{id}
+            where: { id }
         })
     }
 
+    async verificar(id: number) {
+        if (!(await this.show(id))) {
+            throw new NotFoundException(`O ID: ${id} não existe`);
+        }
+    }
 }
