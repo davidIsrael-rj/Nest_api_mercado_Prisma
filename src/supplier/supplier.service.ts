@@ -43,6 +43,7 @@ export class SupplierService {
 
     async delete(id: number) {
 
+
         await this.verificar(id);
 
         return await this.prisma.supplier.delete({
@@ -52,9 +53,12 @@ export class SupplierService {
 
     }
 
+
     async verificar(id: number) {
-        if (!(await this.show(id))) {
-            throw new NotFoundException(`O Id: ${id} não existe.`)
+        if (!(await this.prisma.supplier.findUnique({ where: { id } }))) {
+            throw new NotFoundException(`O ID: ${id} não existe.`)
         }
     }
+
+    
 }
