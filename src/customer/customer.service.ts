@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateCustomerDTO } from "./dto/create-customer.dto";
 import { UpdatePatchCustomerDTO } from "./dto/update-patch-customer.dto";
@@ -24,6 +24,7 @@ export class CustomerService {
     }
 
     async update(id:number ,data:CreateCustomerDTO){
+        await this.verificar(id);
         return this.prisma.customer.update({
             data,
             where:{id}
@@ -31,6 +32,7 @@ export class CustomerService {
     }
 
     async updatePartial(id:number, data:UpdatePatchCustomerDTO){
+        await this.verificar(id);
         return this.prisma.customer.update({
             data,
             where:{id}
@@ -38,8 +40,15 @@ export class CustomerService {
     }
 
     async delete(id: number){
+        await this.verificar(id);
         return this.prisma.customer.delete({
             where:{id}
         })
+    }
+
+    async verificar(id:number){
+        if(!(await this.show(id))){
+            throw new NotFoundException(`O ID: ${id} não existe`);
+        }
     }
 }
