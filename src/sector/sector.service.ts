@@ -19,6 +19,7 @@ export class SectorService {
     }
 
     async show(id: number) {
+        await this.verificar(id);
         return this.prisma.sector.findUnique({
             where: { id }
         });
@@ -40,7 +41,9 @@ export class SectorService {
     }
 
     async verificar(id:number){
-        if(!(await this.show(id))){
+        if(!(await this.prisma.sector.count({
+            where:{id}
+        }))){
             throw new NotFoundException(`O ID: ${id} não existe.`)
         }
     }
