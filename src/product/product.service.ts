@@ -27,6 +27,7 @@ export class ProductService {
     }
 
     async show(id: number) {
+        await this.verificar(id);
         return this.prisma.product.findUnique({
             where: { id }
         });
@@ -56,7 +57,9 @@ export class ProductService {
     }
 
     async verificar(id:number){
-        if(!(await this.show(id))){
+        if(!(await this.prisma.product.count({
+            where:{id}
+        }))){
             throw new NotFoundException(`O ID: ${id} não existe.`)
         }
     }
