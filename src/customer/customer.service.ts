@@ -18,6 +18,7 @@ export class CustomerService {
     }
 
     async show(id:number){
+        await this.verificar(id);
         return this.prisma.customer.findUnique({
             where:{id}
         });
@@ -47,7 +48,9 @@ export class CustomerService {
     }
 
     async verificar(id:number){
-        if(!(await this.show(id))){
+        if(!(await this.prisma.customer.count({
+            where:{id}
+        }))){
             throw new NotFoundException(`O ID: ${id} não existe`);
         }
     }
