@@ -20,6 +20,7 @@ export class SupplierService {
     }
 
     async show(id: number) {
+        await this.verificar(id);
         return this.prisma.supplier.findUnique({
             where: { id }
         });
