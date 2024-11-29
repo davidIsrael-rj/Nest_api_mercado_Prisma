@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/c
 import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 import { PrismaModule } from "../prisma/prisma.module";
-import { UserIdCheckMiddleware } from "../middlewares/user-id-check.middleware";
+import { IdCheckMiddleware } from "../middlewares/id-check.middleware";
 
 @Module({
     imports: [PrismaModule],
@@ -13,7 +13,7 @@ import { UserIdCheckMiddleware } from "../middlewares/user-id-check.middleware";
 export class UserModule implements NestModule{
 
     configure(consumer: MiddlewareConsumer){
-        consumer.apply(UserIdCheckMiddleware).forRoutes({
+        consumer.apply(IdCheckMiddleware).forRoutes({
             path:'users/:id',
             method: RequestMethod.ALL
         })
