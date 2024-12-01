@@ -7,6 +7,7 @@ import { CustomerModule } from './customer/customer.module';
 import { SectorModule } from './sector/sector.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { IdCheckMiddleware } from './middlewares/id-check.middleware';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { IdCheckMiddleware } from './middlewares/id-check.middleware';
     ProductModule,
     CustomerModule,
     SectorModule,
-    SupplierModule
+    SupplierModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
