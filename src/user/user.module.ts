@@ -8,13 +8,13 @@ import { IdCheckMiddleware } from "../middlewares/id-check.middleware";
     imports: [PrismaModule],
     controllers: [UserController],
     providers: [UserService],
-    exports: []
+    exports: [UserService]
 })
-export class UserModule implements NestModule{
+export class UserModule implements NestModule {
 
-    configure(consumer: MiddlewareConsumer){
+    configure(consumer: MiddlewareConsumer) {
         consumer.apply(IdCheckMiddleware).forRoutes({
-            path:'users/:id',
+            path: 'users/:id',
             method: RequestMethod.ALL
         })
     }
