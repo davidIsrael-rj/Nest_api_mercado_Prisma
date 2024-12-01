@@ -48,5 +48,21 @@ export class AuthService {
         return true;
     }
 
+    async reset(password: string, token: string){
+        //TO DO: Validar o Token...
+
+        const id = 0;
+
+        await this.prisma.user.update({
+            where:{
+                id,
+            },
+            data:{
+                password,
+            }
+        });
+
+        return true;
+    }
 
 }
