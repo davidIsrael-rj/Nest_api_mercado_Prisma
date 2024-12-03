@@ -1,78 +1,106 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "../prisma/prisma.service";
 import { User } from "@prisma/client";
+import { UserService } from "../user/user.service";
+import { AuthRegisterDTO } from "./dto/auth-register.dto";
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly jwtService: JwtService,
-        private readonly prisma: PrismaService
+        private readonly prisma: PrismaService,
+        private readonly userService: UserService
     ) { }
 
-    async createToken(user:User) {
-        return this.jwtService.sign({
-            id:user.id,
-            name: user.name,
-            email: user.email
-        }, {
-            expiresIn: "7 days",
-            subject:String(user.id),
-            issuer:'login',
-            audience: 'users'
-        });
+    async createToken(user: User) {
+        return {
+            accessToken: this.jwtService.sign({
+                id: user.id,
+                name: user.name,
+                email: user.email
+            }, {
+                expiresIn: "7 days",
+                subject: String(user.id),
+                issuer: 'login',
+                audience: 'users'
+            })
+        }
     }
 
     async checkToken(token: string) {
-        // return this.jwtService.verify();
+        try {
+
+            const data = this.jwtService.verify(token, {
+                audience: 'users',
+                issuer: 'login'
+            });
+            return data;
+        } catch (e) {
+            throw new BadRequestException(e);
+        }
+    }
+
+    async isValidToken(token: string) {
+        try {
+            this.checkToken(token);
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     async login(email: string, password: string) {
 
-       const user = await this.prisma.user.findFirst({
+        const user = await this.prisma.user.findFirst({
             where: {
                 email,
                 password
             }
         });
 
-        if (!user){
+        if (!user) {
 
             throw new UnauthorizedException('E-mail e/ou senha incorretos.')
         }
 
-        return user;
+        return this.createToken(user);
     }
 
-    async forget(email: string){
+    async forget(email: string) {
         const user = await this.prisma.user.findFirst({
-            where:{
+            where: {
                 email
             }
         });
 
-        if(!user){
+        if (!user) {
             throw new UnauthorizedException('E-mail está incorreto.');
         }
         //TO DO:enviar o e-mail...
         return true;
     }
 
-    async reset(password: string, token: string){
+    async reset(password: string, token: string) {
         //TO DO: Validar o Token...
 
         const id = 0;
 
-        await this.prisma.user.update({
-            where:{
+        const user = await this.prisma.user.update({
+            where: {
                 id,
             },
-            data:{
+            data: {
                 password,
             }
         });
 
-        return true;
+        return this.createToken(user);
+    }
+
+    async register(data: AuthRegisterDTO) {
+        const user = await this.userService.create(data);
+        return this.createToken(user);
     }
 
 }
