@@ -39,6 +39,6 @@ export class AuthController {
     @Post('me')
     async me(@Headers("authorization") token){
         // return (token.split(' ')[1]);
-        return this.authService.checkToken(token.split(' ')[1]);
+        return this.authService.checkToken((token ?? '').split(' ')[1]);
     }
 }
