@@ -4,14 +4,14 @@ import { AuthService } from "../auth/auth.service";
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private readonly authService: AuthService){}
+  constructor(private readonly authService: AuthService) { }
 
-    canActivate(context: ExecutionContext) {
+  canActivate(context: ExecutionContext) {
 
-      const {authorization} = context.switchToHttp().getRequest().headers;
-      console.log({authorization});
+    const { authorization } = context.switchToHttp().getRequest().headers;
+    console.log({ authorization });
 
-      return this.authService.checkToken((authorization ?? '').split(' ')[1] );
-        // return true;
-    }
+    return this.authService.isValidToken((authorization ?? '').split(' ')[1]);
+
+  }
 }
