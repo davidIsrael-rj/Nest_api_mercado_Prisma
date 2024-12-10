@@ -40,6 +40,6 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Post('me')
     async me(@Req() req){
-        return {me: 'ok', data: req.tokenPayload};
+        return {me: 'ok', data: req.tokenPayload, user: req.user};
     }
 }
