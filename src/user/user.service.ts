@@ -9,14 +9,16 @@ export class UserService {
 
     constructor(private readonly prisma: PrismaService) { }
 
-    async create({ email, name, password, birthAt }: CreateUserDTO) {
+    async create({ email, name, password, birthAt, role }: CreateUserDTO) {
 
         return await this.prisma.user.create({
             data: {
                 email,
                 name,
                 password,
-                birthAt: new Date(birthAt)
+                birthAt: new Date(birthAt),
+                role
+
             },
 
         })
@@ -35,21 +37,22 @@ export class UserService {
         });
     }
 
-    async update(id: number, { name, email, password, birthAt }: UpdatePutUserDTO) {
+    async update(id: number, { name, email, password, birthAt, role }: UpdatePutUserDTO) {
         await this.verificar(id);
         return this.prisma.user.update({
-            data: { name, email, password, birthAt: new Date(birthAt) },
+            data: { name, email, password, birthAt: birthAt ? new Date(birthAt): null, role },
             where: { id }
         });
     }
 
-    async updatePartial(id: number, { name, email, password, birthAt }: UpdatePatchUserDTO) {
+    async updatePartial(id: number, { name, email, password, birthAt, role }: UpdatePatchUserDTO) {
         await this.verificar(id);
         return this.prisma.user.update({
             data: {
                 name,
                 email,
                 password,
+                role,
                 birthAt: birthAt === undefined ? undefined : new Date(birthAt)
             },
             where: { id }
