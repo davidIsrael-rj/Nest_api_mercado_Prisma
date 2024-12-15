@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, Put, UseGuards } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdatePutUserDTO } from "./dto/update-put-user.dto";
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
@@ -6,8 +6,9 @@ import { UserService } from "./user.service";
 import { ParamId } from "../decorators/param-id.decorator";
 import { Roles } from "../decorators/roles.decorator";
 import { Role } from "../enums/role.enum";
+import { RoleGuard } from "../guards/role.guard";
 
-
+@UseGuards(RoleGuard) 
 @Controller('users')
 export class UserController {
 
