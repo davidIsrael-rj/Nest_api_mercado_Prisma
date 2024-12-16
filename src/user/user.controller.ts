@@ -7,8 +7,9 @@ import { ParamId } from "../decorators/param-id.decorator";
 import { Roles } from "../decorators/roles.decorator";
 import { Role } from "../enums/role.enum";
 import { RoleGuard } from "../guards/role.guard";
+import { AuthGuard } from "../guards/auth.guard";
 
-@UseGuards(RoleGuard) 
+@UseGuards(AuthGuard,RoleGuard) 
 @Controller('users')
 export class UserController {
 
