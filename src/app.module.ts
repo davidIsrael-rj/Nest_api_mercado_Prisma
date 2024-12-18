@@ -8,9 +8,14 @@ import { SectorModule } from './sector/sector.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { IdCheckMiddleware } from './middlewares/id-check.middleware';
 import { AuthModule } from './auth/auth.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      ttl:60,
+      limit:10,
+    }),
     forwardRef(()=>UserModule),
     ProductModule,
     CustomerModule,

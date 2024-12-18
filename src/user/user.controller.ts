@@ -8,6 +8,7 @@ import { Roles } from "../decorators/roles.decorator";
 import { Role } from "../enums/role.enum";
 import { RoleGuard } from "../guards/role.guard";
 import { AuthGuard } from "../guards/auth.guard";
+import { ThrottlerGuard } from "@nestjs/throttler";
 
 @UseGuards(AuthGuard,RoleGuard) 
 @Controller('users')
@@ -20,7 +21,8 @@ export class UserController {
     async create(@Body()  data:CreateUserDTO) {
         return this.userService.create(data);
     }
-
+    
+    @UseGuards(ThrottlerGuard)
     @Roles(Role.Admin)
     @Get()
     async list() {
