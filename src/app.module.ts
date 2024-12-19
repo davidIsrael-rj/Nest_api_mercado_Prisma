@@ -8,7 +8,8 @@ import { SectorModule } from './sector/sector.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { IdCheckMiddleware } from './middlewares/id-check.middleware';
 import { AuthModule } from './auth/auth.module';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -24,7 +25,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
     forwardRef(()=>AuthModule),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,{
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
