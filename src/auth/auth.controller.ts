@@ -1,4 +1,4 @@
-import { Body, Controller, Headers, Post, Req, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Headers, Post, Req, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthLoginDTO } from "./dto/auth-login.dto";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { AuthForgetDTO } from "./dto/auth-forget.dto";
@@ -11,13 +11,15 @@ import { User } from "../decorators/user.decorator";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { writeFile } from "fs/promises";
 import { join } from 'path';
+import { FileService } from "../file/file.service";
 
 @Controller('auth')
 export class AuthController {
 
     constructor(
         private readonly userService: UserService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly fileService: FileService,
     ) { }
 
     @Post('login')
@@ -53,8 +55,14 @@ export class AuthController {
     async uploadPhoto(@User() user, @UploadedFile() photo: Express.Multer.File) {
 
 
+        const path = join(__dirname, '..', '..', 'storage', 'photos', `photo-${user.id}.png`);
         const result = await writeFile(join(__dirname, '..', '..', 'storage', 'photos', `photo-${user.id}.png`), photo.buffer);
 
-        return { user, photo, result };
+        try {
+            await this.fileService.upload(photo, path);
+        } catch (e) {
+            throw new BadRequestException(e)
+        }
+        return { sucess: true, user, photo }
     }
 }
