@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Headers, Post, Req, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Headers, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthLoginDTO } from "./dto/auth-login.dto";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import { AuthForgetDTO } from "./dto/auth-forget.dto";
@@ -8,7 +8,7 @@ import { AuthService } from "./auth.service";
 import { AuthMeDTO } from "./dto/auth-me.dto";
 import { AuthGuard } from "../guards/auth.guard";
 import { User } from "../decorators/user.decorator";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { writeFile } from "fs/promises";
 import { join } from 'path';
 import { FileService } from "../file/file.service";
@@ -64,5 +64,12 @@ export class AuthController {
             throw new BadRequestException(e)
         }
         return { sucess: true, user, photo }
+    }
+
+    @UseInterceptors(FilesInterceptor('files'))
+    @UseGuards(AuthGuard)
+    @Post('files')
+    async uploadFiles(@User() user, @UploadedFiles() files: Express.Multer.File) {
+        return files
     }
 }
