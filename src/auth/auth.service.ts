@@ -5,6 +5,7 @@ import { User } from "@prisma/client";
 import { UserService } from "../user/user.service";
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
 import * as bcrypt from 'bcrypt';
+import { MailerService } from "@nestjs-modules/mailer";
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,8 @@ export class AuthService {
     constructor(
         private readonly jwtService: JwtService,
         private readonly prisma: PrismaService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        private readonly mailer: MailerService
     ) { }
 
     createToken(user: User) {
@@ -66,9 +68,9 @@ export class AuthService {
 
             throw new UnauthorizedException('E-mail e/ou senha incorretos.');
         }
-        
-        if(!await bcrypt.compare(password, user.password)){
-            throw new UnauthorizedException('E-mail e/ou senha incorretos.');            
+
+        if (!await bcrypt.compare(password, user.password)) {
+            throw new UnauthorizedException('E-mail e/ou senha incorretos.');
         }
 
         return this.createToken(user);
@@ -85,6 +87,25 @@ export class AuthService {
             throw new UnauthorizedException('E-mail está incorreto.');
         }
         //TO DO:enviar o e-mail...
+
+        const token = this.jwtService.sign({
+            id: user.id
+        },{
+            expiresIn: "30 minutes",
+            subject: String(user.id),
+            issuer: 'forget',
+            audience: 'user',
+        });
+
+        await this.mailer.sendMail({
+            subject: 'Recuperação de Senha',
+            to: 'joao@hred.com.br',
+            template: 'forget',
+            context: {
+                name: user.name,
+                token: token
+            }
+        })
         return true;
     }
 
