@@ -90,7 +90,7 @@ export class AuthService {
 
         const token = this.jwtService.sign({
             id: user.id
-        },{
+        }, {
             expiresIn: "30 minutes",
             subject: String(user.id),
             issuer: 'forget',
@@ -99,7 +99,7 @@ export class AuthService {
 
         await this.mailer.sendMail({
             subject: 'Recuperação de Senha',
-            to: 'joao@hred.com.br',
+            to: 'joaoDavid@hred.com.br',
             template: 'forget',
             context: {
                 name: user.name,
@@ -111,20 +111,32 @@ export class AuthService {
 
     async reset(password: string, token: string) {
         //TO DO: Validar o Token...
+        try {
+            const data: any = this.jwtService.verify(token, {
+                issuer: 'forget',
+                audience: 'user',
+            });
 
-        const id = 0;
-
-        const user = await this.prisma.user.update({
-            where: {
-                id,
-            },
-            data: {
-                password,
+            if (isNaN(Number(data.id))) {
+                throw new BadRequestException("Token é inválido.");
             }
-        });
 
-        return this.createToken(user);
+            const salt = await bcrypt.genSalt();
+            password = await bcrypt.hash(password, salt);
+            const user = await this.prisma.user.update({
+                where: {
+                    id: Number(data.id),
+                },
+                data: {
+                    password,
+                }
+            });
+            return this.createToken(user);
+        } catch (e) {
+            throw new BadRequestException(e);
+        }
     }
+
 
     async register(data: AuthRegisterDTO) {
         const user = await this.userService.create(data);
