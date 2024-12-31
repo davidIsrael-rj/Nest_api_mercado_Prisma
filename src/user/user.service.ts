@@ -14,7 +14,6 @@ export class UserService {
 
         password = password;
         const salt = await bcrypt.genSalt();
-        console.log({ salt });
 
         password = await bcrypt.hash(password, salt);
 
