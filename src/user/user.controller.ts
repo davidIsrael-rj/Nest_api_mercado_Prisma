@@ -10,7 +10,7 @@ import { RoleGuard } from "../guards/role.guard";
 import { AuthGuard } from "../guards/auth.guard";
 import { ThrottlerGuard } from "@nestjs/throttler";
 
-@UseGuards(AuthGuard,RoleGuard) 
+// @UseGuards(AuthGuard,RoleGuard) 
 @Controller('users')
 export class UserController {
 
